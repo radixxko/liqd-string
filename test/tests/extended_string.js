@@ -2,7 +2,6 @@
 
 const assert = require('assert' );
 
-require('../../lib/string')('');
 require('../../lib/string')('test_');
 const ExStr = require('../../lib/string')();
 
@@ -85,7 +84,7 @@ describe('- containsubstring)', function()
 	it('should return true if the string contains the specified input string', function()
 	{
 		assert.ok( ExStr('JavaScript is one of the best languages!').contains('one') );
-		assert.ok( !( 'What do you think?'.contains('YES!') ) );
+		assert.ok( !( ExStr('What do you think?').contains('YES!') ) );
 	});
 });
 
@@ -113,7 +112,7 @@ describe('- equalsIgnoreCase()', function()
 
 	it('should not be equal', function()
 	{
-		assert.ok( !( 'John'.equalsIgnoreCase('Jon') ) );
+		assert.ok( !( ExStr('John').equalsIgnoreCase('Jon') ) );
 	});
 });
 
@@ -132,13 +131,13 @@ describe('- decodeHTMLEntities', function()
 {
 	it('should decode HTML entities into their proper string representation', function()
 	{
-		assert.strictEqual( ExStr('Ken Thompson &amp; Dennis Ritchie').decodeHTMLEntities(), 'Ken Thompson & Dennis Ritchie' );
-		assert.strictEqual( ExStr('3 &lt; 4').decodeHTMLEntities(), '3 < 4' );
-		assert.strictEqual( ExStr('http:&#47;&#47;').decodeHTMLEntities(), 'http://' );
-		assert.strictEqual( ExStr('105&#x20AC;').decodeHTMLEntities(), '105€' );
-		assert.strictEqual( ExStr('105&#8364;').decodeHTMLEntities(), '105€' );
-		assert.strictEqual( ExStr('&Aacute;').decodeHTMLEntities(), 'Á' );
-		assert.strictEqual( ExStr('&foobar;').decodeHTMLEntities(), '&foobar;' );
+		assert.strictEqual( ExStr('Ken Thompson &amp; Dennis Ritchie').decodeHTMLEntities().toString(), 'Ken Thompson & Dennis Ritchie' );
+		assert.strictEqual( ExStr('3 &lt; 4').decodeHTMLEntities().toString(), '3 < 4' );
+		assert.strictEqual( ExStr('http:&#47;&#47;').decodeHTMLEntities().toString(), 'http://' );
+		assert.strictEqual( ExStr('105&#x20AC;').decodeHTMLEntities().toString(), '105€' );
+		assert.strictEqual( ExStr('105&#8364;').decodeHTMLEntities().toString(), '105€' );
+		assert.strictEqual( ExStr('&Aacute;').decodeHTMLEntities().toString(), 'Á' );
+		assert.strictEqual( ExStr('&foobar;').decodeHTMLEntities().toString(), '&foobar;' );
 	});
 });
 
@@ -146,15 +145,15 @@ describe('- endsWith(suffix1[, suffix2, ..])', function()
 {
 	it("should return true if the string ends with the input string", function()
 	{
-		assert.ok( "hello jon".endsWith('jon') );
-		assert.ok( "hello jon".endsWithAny('jon') );
-		assert.ok( !('ffffaaa'.endsWith('jon') ) );
-		assert.ok( "".endsWith('') );
-		assert.ok( "hi".endsWith('') );
-		assert.ok( "hi".endsWith('hi') );
-		assert.ok( "test.jpeg".endsWithAny('png', 'jpg', 'jpeg') );
-		assert.ok( "Chunky Bacon".endsWith('') );
-		assert.ok( !( "Chunky Bacon".endsWithAny("nk", "aco") ) );
+		assert.ok( ExStr("hello jon").endsWith('jon') );
+		assert.ok( ExStr("hello jon").endsWithAny('jon') );
+		assert.ok( !(ExStr('ffffaaa').endsWith('jon') ) );
+		assert.ok( ExStr("").endsWith('') );
+		assert.ok( ExStr("hi").endsWith('') );
+		assert.ok( ExStr("hi").endsWith('hi') );
+		assert.ok( ExStr("test.jpeg").endsWithAny('png', 'jpg', 'jpeg') );
+		assert.ok( ExStr("Chunky Bacon").endsWith('') );
+		assert.ok( !( ExStr("Chunky Bacon").endsWithAny("nk", "aco") ) );
 	});
 });
 
@@ -193,14 +192,14 @@ describe('- humanize()', function()
 {
 	it('should humanize the string', function()
 	{
-		assert.strictEqual( ExStr('the_humanize_string_method').humanize(), 'The humanize string method' );
-		assert.strictEqual( ExStr('ThehumanizeStringMethod').humanize(), 'Thehumanize string method' );
-		assert.strictEqual( ExStr('the humanize string method').humanize(), 'The humanize string method' );
-		assert.strictEqual( ExStr('the humanize_id string method_id').humanize(), 'The humanize id string method' );
-		assert.strictEqual( ExStr('the  humanize string method  ').humanize(), 'The humanize string method' );
-		assert.strictEqual( ExStr('   capitalize dash-CamelCase_underscore trim  ').humanize(), 'Capitalize dash camel case underscore trim' );
-		assert.strictEqual( ExStr('123').humanize(), '123' );
-		assert.strictEqual( ExStr('').humanize(), '' );
+		assert.strictEqual( ExStr('the_humanize_string_method').humanize().toString(), 'The humanize string method' );
+		assert.strictEqual( ExStr('ThehumanizeStringMethod').humanize().toString(), 'Thehumanize string method' );
+		assert.strictEqual( ExStr('the humanize string method').humanize().toString(), 'The humanize string method' );
+		assert.strictEqual( ExStr('the humanize_id string method_id').humanize().toString(), 'The humanize id string method' );
+		assert.strictEqual( ExStr('the  humanize string method  ').humanize().toString(), 'The humanize string method' );
+		assert.strictEqual( ExStr('   capitalize dash-CamelCase_underscore trim  ').humanize().toString(), 'Capitalize dash camel case underscore trim' );
+		assert.strictEqual( ExStr('123').humanize().toString(), '123' );
+		assert.strictEqual( ExStr('').humanize().toString(), '' );
 	});
 });
 
@@ -209,7 +208,7 @@ describe('- includes substring', function()
 	it('should return true if the string contains the specified input string', function()
 	{
 		assert.ok( ExStr('JavaScript is one of the best languages!').includes('one') );
-		assert.ok( !('What do you think?'.includes('YES!') ));
+		assert.ok( !(ExStr('What do you think?').includes('YES!') ));
 	});
 });
 
@@ -217,14 +216,14 @@ describe('- isAlpha', function()
 {
 	it("should return true if the string contains only letters", function()
 	{
-		assert.ok( "afaf".isAlpha );
-		assert.ok( "FJslfjkasfs".isAlpha );
-		assert.ok( "áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ".isAlpha );
-		assert.ok( !("adflj43faljsdf".isAlpha ));
-		assert.ok( !("33".isAlpha ));
-		assert.ok( !("TT....TTTafafetstYY".isAlpha ));
-		assert.ok( !("-áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ".isAlpha ));
-		assert.ok( !("".isAlpha ));
+		assert.ok( ExStr("afaf").isAlpha );
+		assert.ok( ExStr("FJslfjkasfs").isAlpha );
+		assert.ok( ExStr("áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ").isAlpha );
+		assert.ok( !(ExStr("adflj43faljsdf").isAlpha ));
+		assert.ok( !(ExStr("33").isAlpha ));
+		assert.ok( !(ExStr("TT....TTTafafetstYY").isAlpha ));
+		assert.ok( !(ExStr("-áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ").isAlpha ));
+		assert.ok( !(ExStr("").isAlpha ));
 	});
 });
 
@@ -232,16 +231,16 @@ describe('- isAlphaNumeric', function()
 {
 	it("should return true if the string contains only letters and digits", function()
 	{
-		assert.ok( "afaf35353afaf".isAlphaNumeric );
-		assert.ok( "FFFF99fff".isAlphaNumeric );
-		assert.ok( "99".isAlphaNumeric );
-		assert.ok( "afff".isAlphaNumeric );
-		assert.ok( "Infinity".isAlphaNumeric );
-		assert.ok( "áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ1234567890".isAlphaNumeric );
-		assert.ok( !("-Infinity".isAlphaNumeric ));
-		assert.ok( !("-33".isAlphaNumeric ));
-		assert.ok( !("aaff..".isAlphaNumeric ));
-		assert.ok( !(".áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ1234567890".isAlphaNumeric ));
+		assert.ok( ExStr("afaf35353afaf").isAlphaNumeric );
+		assert.ok( ExStr("FFFF99fff").isAlphaNumeric );
+		assert.ok( ExStr("99").isAlphaNumeric );
+		assert.ok( ExStr("afff").isAlphaNumeric );
+		assert.ok( ExStr("Infinity").isAlphaNumeric );
+		assert.ok( ExStr("áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ1234567890").isAlphaNumeric );
+		assert.ok( !(ExStr("-Infinity").isAlphaNumeric ));
+		assert.ok( !(ExStr("-33").isAlphaNumeric ));
+		assert.ok( !(ExStr("aaff..").isAlphaNumeric ));
+		assert.ok( !(ExStr(".áéúóúÁÉÍÓÚãõÃÕàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛäëïöüÄËÏÖÜçÇ1234567890").isAlphaNumeric ));
 	});
 });
 
@@ -252,7 +251,7 @@ describe('- isEmpty', function()
 		assert.ok( ExStr(' ').isEmpty );
 		assert.ok( ExStr('\t\t\t    ').isEmpty );
 		assert.ok( ExStr('\n\n ').isEmpty );
-		assert.ok( !('hey'.isEmpty ));
+		assert.ok( !(ExStr('hey').isEmpty ));
 	});
 });
 
@@ -262,15 +261,15 @@ describe('- isLower', function()
 	{
 		assert.ok( ExStr('a').isLower );
 		assert.ok( ExStr('z').isLower );
-		assert.ok( !('B'.isLower ));
+		assert.ok( !(ExStr('B').isLower ));
 		assert.ok( ExStr('hijp').isLower );
 		assert.ok( ExStr('áéúóúãõàèìòùâêîôûäëïöüç').isLower );
 		assert.ok( ExStr('áéúóúãõàèìòùâêîôûäëïöüça').isLower );
-		assert.ok( !('hi jp'.isLower ));
-		assert.ok( !('HelLO'.isLower ));
-		assert.ok( !('ÁÉÍÓÚÃÕÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÇ'.isLower ));
-		assert.ok( !('áéúóúãõàèìòùâêîôûäëïöüçÁ'.isLower ));
-		assert.ok( !('áéúóúãõàèìòùâêîôû äëïöüç'.isLower ));
+		assert.ok( !(ExStr('hi jp').isLower ));
+		assert.ok( !(ExStr('HelLO').isLower ));
+		assert.ok( !(ExStr('ÁÉÍÓÚÃÕÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÇ').isLower ));
+		assert.ok( !(ExStr('áéúóúãõàèìòùâêîôûäëïöüçÁ').isLower ));
+		assert.ok( !(ExStr('áéúóúãõàèìòùâêîôû äëïöüç').isLower ));
 	});
 });
 
@@ -278,15 +277,15 @@ describe('- isNumeric', function()
 {
 	it("should return true if the string only contains digits, this would not include Infinity or -Infinity", function()
 	{
-		assert.ok( "3".isNumeric );
-		assert.ok( !("34.22".isNumeric ));
-		assert.ok( !("-22.33".isNumeric ));
-		assert.ok( !("NaN".isNumeric ));
-		assert.ok( !("Infinity".isNumeric ));
-		assert.ok( !("-Infinity".isNumeric ));
-		assert.ok( !("JP".isNumeric ));
-		assert.ok( !("-5".isNumeric ));
-		assert.ok( "000992424242".isNumeric );
+		assert.ok( ExStr("3").isNumeric );
+		assert.ok( !(ExStr("34.22").isNumeric ));
+		assert.ok( !(ExStr("-22.33").isNumeric ));
+		assert.ok( !(ExStr("NaN").isNumeric ));
+		assert.ok( !(ExStr("Infinity").isNumeric ));
+		assert.ok( !(ExStr("-Infinity").isNumeric ));
+		assert.ok( !(ExStr("JP").isNumeric ));
+		assert.ok( !(ExStr("-5").isNumeric ));
+		assert.ok( ExStr("000992424242").isNumeric );
 	});
 });
 
@@ -314,7 +313,7 @@ describe('- latinise', function()
 		assert.ok( ExStr('crème brûlée').latinise().toString() === 'creme brulee' );
 		assert.ok( ExStr('CRÈME BRÛLÉE').latinise().toString() === 'CREME BRULEE' );
 		assert.ok( ExStr('Příliš žluťoučký kůň úpěl ďábelské ódy').latinise().toString() === 'Prilis zlutoucky kun upel dabelske ody' );
-		assert.ok( ExStr('chinese 中英字典 YellowBridge').latinise() === 'chinese 中英字典 YellowBridge' );
+		assert.ok( ExStr('chinese 中英字典 YellowBridge').latinise().toString() === 'chinese 中英字典 YellowBridge' );
 	});
 });
 
@@ -356,9 +355,9 @@ describe('- pad(len, [char])', function()
 
 	it('should work on numbers', function()
 	{
-		assert.ok( (1234).toString().pad(4, '0').toString() === '1234' );
-		assert.ok( (1234).toString().pad(7, '0').toString() === '0012340' );
-		assert.ok( (1234).toString().pad(7, '1').toString() === '1112341' );
+		assert.ok( ExStr((1234).toString()).pad(4, '0').toString() === '1234' );
+		assert.ok( ExStr((1234).toString()).pad(7, '0').toString() === '0012340' );
+		assert.ok( ExStr((1234).toString()).pad(7, '1').toString() === '1112341' );
 	});
 
 	it('should use the default padding character when given null', function()
@@ -381,9 +380,9 @@ describe('- padLeft(len, [char])', function()
 
 	it('should work on numbers', function()
 	{
-		assert.ok( (1234).toString().padLeft(4, '0').toString() === '1234' );
-		assert.ok( (1234).toString().padLeft(7, '0').toString() === '0001234' );
-		assert.ok( (1234).toString().padLeft(7, '1').toString() === '1111234' );
+		assert.ok( ExStr((1234).toString()).padLeft(4, '0').toString() === '1234' );
+		assert.ok( ExStr((1234).toString()).padLeft(7, '0').toString() === '0001234' );
+		assert.ok( ExStr((1234).toString()).padLeft(7, '1').toString() === '1111234' );
 	});
 
 	it('should use the default padding character when given null', function()
@@ -406,9 +405,9 @@ describe('- padRight(len, [char])', function()
 
 	it('should work on numbers', function()
 	{
-		assert.ok( (1234).toString().padRight(4, '0').toString() === '1234' );
-		assert.ok( (1234).toString().padRight(7, '0').toString() === '1234000' );
-		assert.ok( (1234).toString().padRight(7, '1').toString() === '1234111' );
+		assert.ok( ExStr((1234).toString()).padRight(4, '0').toString() === '1234' );
+		assert.ok( ExStr((1234).toString()).padRight(7, '0').toString() === '1234000' );
+		assert.ok( ExStr((1234).toString()).padRight(7, '1').toString() === '1234111' );
 	});
 
 	it('should use the default padding character when given null', function()
@@ -612,7 +611,7 @@ describe('- stripLeft(chars)', function ()
 		assert.ok( ExStr('_.foo-_').stripLeft('_.').toString() === 'foo-_' );
 		assert.ok( ExStr('?foo ').stripLeft('?').toString() === 'foo ' );
 		assert.ok( ExStr('[$]hello-^').stripLeft('^[a-z]$').toString() === 'hello-^' );
-		assert.ok( ExStr(123).toString().stripLeft(1).toString() === '23' );
+		assert.ok( ExStr((123).toString()).stripLeft(1).toString() === '23' );
 		assert.ok( ExStr('aztesta').stripLeft('^[a-z]\0$').toString() === 'testa' );
 		assert.ok( ExStr('b	\ntest').stripLeft('\tb\n').toString() === 'test' );
 	});
@@ -635,7 +634,7 @@ describe('- stripRight(chars)', function ()
 		assert.ok( ExStr('_.foo_.').stripRight('_.').toString() === '_.foo' );
 		assert.ok( ExStr(' foo?').stripRight('?').toString() === ' foo' );
 		assert.ok( ExStr('[$]hello-^').stripRight('^[a-z]$').toString() === '[$]hello' );
-		assert.ok( (123).toString().stripRight(3).toString() === '12' );
+		assert.ok( ExStr((123).toString()).stripRight(3).toString() === '12' );
 	});
 });
 
@@ -668,17 +667,17 @@ describe('- startsWithAny(prefix1 [, prefix2, ...])', function()
 {
 	it("should return true if the string starts with the input string", function()
 	{
-		assert.ok( "JP is a software engineer".startsWith("JP") );
-		assert.ok( "JP is a software engineer".startsWithAny("JP") );
-		assert.ok( !('wants to change the world'.startsWith("politicians") ));
-		assert.ok( "".startsWith("") );
-		assert.ok( "Hi".startsWith("") );
-		assert.ok( "JP".startsWith("JP") );
-		assert.ok( "".startsWithAny("") );
-		assert.ok( "Hi".startsWithAny("") );
-		assert.ok( "JP".startsWithAny("JP") );
-		assert.ok( "Chunky Bacon".startsWithAny("JP", "Chunk") );
-		assert.ok( !("Lorem Ipsum".startsWithAny("Ip", "Sum") ));
+		assert.ok( ExStr("JP is a software engineer").startsWith("JP") );
+		assert.ok( ExStr("JP is a software engineer").startsWithAny("JP") );
+		assert.ok( !(ExStr('wants to change the world').startsWith("politicians") ));
+		assert.ok( ExStr("").startsWith("") );
+		assert.ok( ExStr("Hi").startsWith("") );
+		assert.ok( ExStr("JP").startsWith("JP") );
+		assert.ok( ExStr("").startsWithAny("") );
+		assert.ok( ExStr("Hi").startsWithAny("") );
+		assert.ok( ExStr("JP").startsWithAny("JP") );
+		assert.ok( ExStr("Chunky Bacon").startsWithAny("JP", "Chunk") );
+		assert.ok( !(ExStr("Lorem Ipsum").startsWithAny("Ip", "Sum") ));
 	});
 });
 
@@ -706,30 +705,30 @@ describe('- titleCase()', function()
 {
 	it('should upperCase all words in a camel cased string', function()
 	{
-		assert.strictEqual( ExStr('dataRate').titleCase(), 'DataRate' );
-		assert.strictEqual( ExStr('CarSpeed').titleCase(), 'CarSpeed' );
-		assert.strictEqual( ExStr('yesWeCan').titleCase(), 'YesWeCan' );
-		assert.strictEqual( ExStr('backgroundColor').titleCase(), 'BackgroundColor' );
+		assert.strictEqual( ExStr('dataRate').titleCase().toString(), 'DataRate' );
+		assert.strictEqual( ExStr('CarSpeed').titleCase().toString(), 'CarSpeed' );
+		assert.strictEqual( ExStr('yesWeCan').titleCase().toString(), 'YesWeCan' );
+		assert.strictEqual( ExStr('backgroundColor').titleCase().toString(), 'BackgroundColor' );
 	});
 
 	it('should upperCase all words in a string with spaces, underscores, or dashes', function()
 	{
-		assert.strictEqual( ExStr('Like ice in the sunshine').titleCase(), 'Like Ice In The Sunshine' );
-		assert.strictEqual( ExStr('data_rate').titleCase(), 'Data_Rate' );
-		assert.strictEqual( ExStr('background-color').titleCase(), 'Background-Color' );
-		assert.strictEqual( ExStr('-moz-something').titleCase(), '-Moz-Something' );
-		assert.strictEqual( ExStr('_car_speed_').titleCase(), '_Car_Speed_' );
-		assert.strictEqual( ExStr('yes_we_can').titleCase(), 'Yes_We_Can' );
+		assert.strictEqual( ExStr('Like ice in the sunshine').titleCase().toString(), 'Like Ice In The Sunshine' );
+		assert.strictEqual( ExStr('data_rate').titleCase().toString(), 'Data_Rate' );
+		assert.strictEqual( ExStr('background-color').titleCase().toString(), 'Background-Color' );
+		assert.strictEqual( ExStr('-moz-something').titleCase().toString(), '-Moz-Something' );
+		assert.strictEqual( ExStr('_car_speed_').titleCase().toString(), '_Car_Speed_' );
+		assert.strictEqual( ExStr('yes_we_can').titleCase().toString(), 'Yes_We_Can' );
 	});
 
 	it('can be combined with humanize to create nice titles out of ugly developer strings', function()
 	{
-		assert.strictEqual( ExStr('   capitalize dash-CamelCase_underscore trim  ').humanize().titleCase(), 'Capitalize Dash Camel Case Underscore Trim' );
+		assert.strictEqual( ExStr('   capitalize dash-CamelCase_underscore trim  ').humanize().titleCase().toString(), 'Capitalize Dash Camel Case Underscore Trim' );
 	});
 
 	it('does not fail on edge cases', function ()
 	{
-		assert.strictEqual( ExStr('').titleCase(), '' );
+		assert.strictEqual( ExStr('').titleCase().toString(), '' );
 	});
 });
 
@@ -756,8 +755,8 @@ describe('- toBoolean', function()
 	it('should convert a logical truth string to boolean', function()
 	{
 		assert.ok( ExStr('true').toBool() );
-		assert.ok( !('false'.toBool() ));
-		assert.ok( !('hello'.toBool() ));
+		assert.ok( !(ExStr('false').toBool() ));
+		assert.ok( !(ExStr('hello').toBool() ));
 		assert.ok( ExStr('on').toBool() );
 		assert.ok( ExStr('ok').toBool() );
 		assert.ok( ExStr('OK').toBool() );
@@ -767,15 +766,15 @@ describe('- toBoolean', function()
 		assert.ok( ExStr('TrUe').toBool() );
 		assert.ok( ExStr('YES').toBool() );
 		assert.ok( ExStr('ON').toBool() );
-		assert.ok( !(''.toBool() ));
-		assert.ok( !('undefined'.toBool() ));
-		assert.ok( !('null'.toBool() ));
-		assert.ok( !({}.toString().toBool() ));
-		assert.ok( (1).toString().toBool() );
-		assert.ok( !((-1).toString().toBool() ));
-		assert.ok( !((0).toString().toBool() ));
+		assert.ok( !(ExStr('').toBool() ));
+		assert.ok( !(ExStr('undefined').toBool() ));
+		assert.ok( !(ExStr('null').toBool() ));
+		assert.ok( !(ExStr({}.toString()).toBool() ));
+		assert.ok( ExStr((1).toString()).toBool() );
+		assert.ok( !(ExStr((-1).toString()).toBool() ));
+		assert.ok( !(ExStr((0).toString()).toBool() ));
 		assert.ok( ExStr('1').toBool() );
-		assert.ok( !('0'.toBool() ));
+		assert.ok( !(ExStr('0').toBool() ));
 	});
 });
 /*
@@ -866,7 +865,7 @@ describe('- underscore()', function()
 	{
 		assert.ok( ExStr('dataRate').underscore().toString() === 'data_rate' );
 		assert.ok( ExStr('CarSpeed').underscore().toString() === 'car_speed' );
-		assert.ok( !('CarSpeed'.underscore().toString() === '_car_speed' ));
+		assert.ok( !(ExStr('CarSpeed').underscore().toString() === '_car_speed' ));
 		assert.ok( ExStr('_CarSpeed').underscore().toString() === '_car_speed' );
 		assert.ok( ExStr('yesWeCan').underscore().toString() === 'yes_we_can' );
 		assert.ok( ExStr('oneAtATime').underscore().toString() === 'one_at_a_time' );
@@ -907,7 +906,7 @@ describe('- Misc', function()
 	});
 });
 
-describe('- Overload', function()
+/*describe('- Overload', function()
 {
 	it('should overload func', function()
 	{
@@ -918,4 +917,4 @@ describe('- Overload', function()
 	{
 		assert.ok( 'foobar'.test_isAlpha === true );
 	});
-});
+});*/
