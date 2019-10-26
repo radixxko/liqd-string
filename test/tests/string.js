@@ -660,6 +660,7 @@ describe('- slugify', function()
 		assert.ok( 'Global Thermonuclear Warfare'.slugify() === 'global-thermonuclear-warfare' );
 		assert.ok( 'Fast JSON Parsing'.slugify() === 'fast-json-parsing' );
 		assert.ok( 'Crème brûlée'.slugify() === 'creme-brulee' );
+		assert.ok( 'pros/cons'.slugify() === 'pros-cons' );
 	});
 });
 
