@@ -1,7 +1,7 @@
 {
   "name": "liqd-string",
   "description": "String helper functions",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "author": "radixxko",
   "license": "MIT",
   "main": "lib/string.js",
